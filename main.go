@@ -12,8 +12,9 @@ func main() {
 	app := app()
 	application := app()
 	application.Gin.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong Test Application",
+		request := newRequest(c)
+		request.Context.JSON(200, gin.H{
+			"message": "request done",
 		})
 	})
 	application.Gin.Run(":9999") //http://127.0.0.1:9999/ping

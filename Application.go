@@ -7,7 +7,6 @@ type Application struct {
 }
 
 func app() func() Application {
-
 	return func() Application {
 		var application Application
 		application.Gin = gin.Default()
