@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"go-starter/Application"
 	"go-starter/Models"
+	"go-starter/Routes"
 )
 
 func main() {
@@ -19,17 +19,10 @@ func main() {
 	// close connection
 	Application.CloseConnection(&app)
 
-	app.Gin.GET("/create-user", func(c *gin.Context) {
-		r := Application.NewRequest(c)
-		user := Models.User{
-			Username: "Youssef Ashraf",
-			Email:    "Youssef@youssef.com",
-			Password: "123456",
-		}
+	routerApp := Routes.RouterApp{&app}
+	routerApp.Routing()
 
-		r.DB.Create(&user)
-		r.Created(user)
-	})
+	// start server app
 	app.Gin.Run(":9999") //http://127.0.0.1:9999/ping
 
 }
