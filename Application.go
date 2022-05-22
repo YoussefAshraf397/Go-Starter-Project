@@ -1,15 +1,26 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"database/sql"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+)
 
 type Application struct {
-	Gin *gin.Engine
+	Gin        *gin.Engine
+	DB         *gorm.DB
+	Connection *sql.DB
+}
+
+func (app *Application) Share() {
+
 }
 
 func app() func() Application {
 	return func() Application {
 		var application Application
 		application.Gin = gin.Default()
+		connectToDatabase(&application)
 		return application
 
 	}
