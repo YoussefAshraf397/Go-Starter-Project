@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"go-starter/Application"
+	"go-starter/Models"
 )
 
 func main() {
@@ -13,12 +14,21 @@ func main() {
 	// ------------------------------------------------------------------------------------------------- //
 
 	app := Application.NewApp()
+	// migrate project
+	app.DB.AutoMigrate(&Models.User{})
+	// close connection
+	Application.CloseConnection(&app)
 
-	app.Gin.GET("/ping", func(c *gin.Context) {
+	app.Gin.GET("/create-user", func(c *gin.Context) {
 		r := Application.NewRequest(c)
-		r.OK(gin.H{
-			"message": "YOUSSEF",
-		})
+		user := Models.User{
+			Username: "Youssef Ashraf",
+			Email:    "Youssef@youssef.com",
+			Password: "123456",
+		}
+
+		r.DB.Create(&user)
+		r.Created(user)
 	})
 	app.Gin.Run(":9999") //http://127.0.0.1:9999/ping
 

@@ -33,7 +33,7 @@ func (req *Request) Share() {
 }
 
 func (req Request) Response(code int, body interface{}) {
-	closeConnection(&req)
+	CloseConnection(&req)
 	req.Context.JSON(code, body)
 }
 
