@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"go-starter/Application"
 )
 
 func main() {
@@ -11,14 +12,14 @@ func main() {
 	// language
 	// ------------------------------------------------------------------------------------------------- //
 
-	app := app()
-	application := app()
-	application.Gin.GET("/ping", func(c *gin.Context) {
-		r := newRequest(c)
+	app := Application.NewApp()
+
+	app.Gin.GET("/ping", func(c *gin.Context) {
+		r := Application.NewRequest(c)
 		r.OK(gin.H{
 			"message": "YOUSSEF",
 		})
 	})
-	application.Gin.Run(":9999") //http://127.0.0.1:9999/ping
+	app.Gin.Run(":9999") //http://127.0.0.1:9999/ping
 
 }

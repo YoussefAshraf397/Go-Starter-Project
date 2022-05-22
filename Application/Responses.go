@@ -1,6 +1,8 @@
-package main
+package Application
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func (req Request) OK(body interface{}) {
 	req.Response(200, body)

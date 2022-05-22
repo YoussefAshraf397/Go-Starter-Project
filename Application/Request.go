@@ -1,4 +1,4 @@
-package main
+package Application
 
 import (
 	"database/sql"
@@ -38,7 +38,7 @@ func (req Request) Response(code int, body interface{}) {
 }
 
 // Initialize new request closure
-func newRequest(c *gin.Context) Request {
+func NewRequest(c *gin.Context) Request {
 	request := req()
 	req := request(c)
 
