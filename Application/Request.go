@@ -2,7 +2,9 @@ package Application
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"go-starter/Models"
 	"gorm.io/gorm"
 )
 
@@ -10,6 +12,8 @@ type Request struct {
 	Context    *gin.Context
 	DB         *gorm.DB
 	Connection *sql.DB
+	IsAuth     bool
+	User       Models.User
 }
 
 type SharedResources interface {
@@ -42,5 +46,19 @@ func NewRequest(c *gin.Context) Request {
 	request := req()
 	req := request(c)
 
+	return req
+}
+
+func (req Request) Auth() Request {
+
+	req.IsAuth = false
+	authHeader := req.Context.GetHeader("Authorized")
+	if authHeader != "" {
+		fmt.Println("Header: ", authHeader)
+		req.DB.Where("token = ?", authHeader).First(&req.User)
+		if req.User.ID != 0 {
+			req.IsAuth = true
+		}
+	}
 	return req
 }
