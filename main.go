@@ -1,6 +1,9 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
 	// Gin framework for working with routes  (Routing , validate request , response , middleware)
@@ -13,6 +16,10 @@ func main() {
 	application := app()
 	application.Gin.GET("/ping", func(c *gin.Context) {
 		request := newRequest(c)
+		fmt.Println(request.Connection.Ping())
+
+		request.closeConnection()
+		fmt.Println(request.Connection.Ping())
 		request.Context.JSON(200, gin.H{
 			"message": "request done",
 		})
