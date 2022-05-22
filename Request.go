@@ -25,6 +25,11 @@ func req() func(c *gin.Context) Request {
 	}
 }
 
+func (req Request) Response(code int, body interface{}) {
+	req.closeConnection()
+	req.Context.JSON(code, body)
+}
+
 // Initialize new request closure
 func newRequest(c *gin.Context) Request {
 	request := req()
