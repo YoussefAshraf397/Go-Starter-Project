@@ -14,6 +14,7 @@ type Request struct {
 	Connection *sql.DB
 	IsAuth     bool
 	User       Models.User
+	IsAdmin    bool
 }
 
 type SharedResources interface {
@@ -52,12 +53,16 @@ func NewRequest(c *gin.Context) Request {
 func (req Request) Auth() Request {
 
 	req.IsAuth = false
+	req.IsAdmin = false
 	authHeader := req.Context.GetHeader("Authorized")
 	if authHeader != "" {
 		fmt.Println("Header: ", authHeader)
 		req.DB.Where("token = ?", authHeader).First(&req.User)
 		if req.User.ID != 0 {
 			req.IsAuth = true
+		}
+		if req.User.Group == "admin" {
+			req.IsAdmin = true
 		}
 	}
 	return req
