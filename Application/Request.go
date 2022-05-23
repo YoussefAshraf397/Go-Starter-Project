@@ -45,14 +45,21 @@ func (req Request) Response(code int, body interface{}) {
 // Initialize new request closure
 func NewRequest(c *gin.Context) *Request {
 	request := req()
-	req := request(c)
-
-	return req
+	return request(c)
 }
 
 func NewRequestWithAuth(c *gin.Context) *Request {
 	return NewRequest(c).Auth()
 
+}
+
+func AuthRequest(c *gin.Context) (*Request, bool) {
+	r := NewRequestWithAuth(c)
+	if !r.IsAuth {
+		r.NoAuth()
+		return r, false
+	}
+	return r, true
 }
 
 func (req Request) Auth() *Request {

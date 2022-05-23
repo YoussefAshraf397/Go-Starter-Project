@@ -17,9 +17,9 @@ func main() {
 	// migrate project
 	app.DB.AutoMigrate(&Models.User{})
 	// close connection
-	Application.CloseConnection(&app)
+	Application.CloseConnection(app)
 
-	routerApp := Routes.RouterApp{&app}
+	routerApp := Routes.RouterApp{app}
 	routerApp.Routing()
 
 	// start server app

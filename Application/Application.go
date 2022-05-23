@@ -16,20 +16,18 @@ func (app *Application) Share() {
 
 }
 
-func App() func() Application {
-	return func() Application {
+func App() func() *Application {
+	return func() *Application {
 		var application Application
 		application.Gin = gin.Default()
 		connectToDatabase(&application)
-		return application
+		return &application
 
 	}
 }
 
 // Initialize new request closure
-func NewApp() Application {
+func NewApp() *Application {
 	app := App()
-	application := app()
-
-	return application
+	return app()
 }
