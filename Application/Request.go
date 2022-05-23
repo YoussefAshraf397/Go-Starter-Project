@@ -5,18 +5,20 @@ import (
 	"fmt"
 	"github.com/bykovme/gotrans"
 	"github.com/gin-gonic/gin"
+	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"go-starter/Models"
 	"gorm.io/gorm"
 )
 
 type Request struct {
-	Context    *gin.Context
-	DB         *gorm.DB
-	Connection *sql.DB
-	IsAuth     bool
-	User       Models.User
-	IsAdmin    bool
-	Lang       string
+	Context         *gin.Context
+	DB              *gorm.DB
+	Connection      *sql.DB
+	IsAuth          bool
+	User            Models.User
+	IsAdmin         bool
+	Lang            string
+	ValidationError error
 }
 
 type SharedResources interface {
@@ -34,6 +36,10 @@ func req() func(c *gin.Context) *Request {
 
 		return &request
 	}
+}
+
+func (req *Request) ValidateRequest(errors validation.Errors) {
+	req.ValidationError = errors.Filter()
 }
 
 func setLang(req *Request) {

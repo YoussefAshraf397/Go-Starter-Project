@@ -1,11 +1,10 @@
 package Visitors
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/go-ozzo/ozzo-validation/v4"
 	"go-starter/Application"
 	"go-starter/Models"
+	"go-starter/Validation/Visitors"
 )
 
 //func CreateUser(c *gin.Context) {
@@ -40,18 +39,10 @@ func Register(c *gin.Context) {
 	r.Context.ShouldBind(&user)
 
 	//Validate Request
-	err := validation.Errors{
-		"username": validation.Validate(user.Username, validation.Required, validation.Length(2, 20)),
-		"email":    validation.Validate(user.Email, validation.Required, validation.Length(5, 500)),
-		"password": validation.Validate(user.Password, validation.Required, validation.Length(8, 15)),
-	}.Filter()
-
-	if err != nil {
-		r.BadRequest(err)
+	r.ValidateRequest(Visitors.RegisterValidation(user))
+	if r.ValidationError != nil {
+		r.BadRequest(r.ValidationError)
 		return
 	}
 	r.OK(user)
-
-	fmt.Println(err)
-
 }
