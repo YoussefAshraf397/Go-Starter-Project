@@ -3,6 +3,7 @@ package Application
 import (
 	"database/sql"
 	"fmt"
+	"github.com/bykovme/gotrans"
 	"github.com/gin-gonic/gin"
 	"go-starter/Models"
 	"gorm.io/gorm"
@@ -15,6 +16,7 @@ type Request struct {
 	IsAuth     bool
 	User       Models.User
 	IsAdmin    bool
+	Lang       string
 }
 
 type SharedResources interface {
@@ -27,10 +29,17 @@ func req() func(c *gin.Context) *Request {
 		var request Request
 		request.Context = c
 		connectToDatabase(&request)
+		setLang(&request)
 		//request.DB, request.Connection = connectToDatabase()
 
 		return &request
 	}
+}
+
+func setLang(req *Request) {
+	lang := gotrans.DetectLanguage(req.Context.GetHeader("Accept-Language"))
+	gotrans.SetDefaultLocale(lang)
+	req.Lang = lang
 }
 
 func (req *Request) Share() {

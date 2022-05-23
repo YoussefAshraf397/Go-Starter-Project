@@ -1,6 +1,7 @@
 package Auth
 
 import (
+	"github.com/bykovme/gotrans"
 	"github.com/gin-gonic/gin"
 	"go-starter/Application"
 	"go-starter/Models"
@@ -27,5 +28,9 @@ func ViewUser(c *gin.Context) {
 	if !auth {
 		return
 	}
-	r.OK(r.User)
+	//r.OK(r.User)
+	r.OK(gin.H{
+		"message": gotrans.T("hello_world"),
+		"lang":    r.Lang,
+	})
 }

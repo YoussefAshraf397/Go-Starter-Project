@@ -14,11 +14,11 @@ func main() {
 	// auth user
 	// language
 	// ------------------------------------------------------------------------------------------------- //
-	_ = gotrans.InitLocales("public/languages") //  Path to the folder with localization files
-	_ = gotrans.SetDefaultLocale("ar")          // Setting default locale
-	fmt.Println(gotrans.T("hello_world"))
 
 	app := Application.NewApp()
+	_ = gotrans.SetDefaultLocale("en") // Setting default locale
+	fmt.Println(gotrans.T("hello_world"))
+
 	// migrate project
 	app.DB.AutoMigrate(&Models.User{})
 	// close connection

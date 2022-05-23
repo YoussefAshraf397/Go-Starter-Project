@@ -2,6 +2,8 @@ package Application
 
 import (
 	"database/sql"
+	"fmt"
+	"github.com/bykovme/gotrans"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -21,6 +23,11 @@ func App() func() *Application {
 		var application Application
 		application.Gin = gin.Default()
 		connectToDatabase(&application)
+		err := gotrans.InitLocales("public/languages") // initialize the language files
+		if err != nil {
+			fmt.Println("Error in loading translation files !", err.Error())
+		}
+
 		return &application
 
 	}
