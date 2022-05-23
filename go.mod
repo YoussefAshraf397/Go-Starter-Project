@@ -3,6 +3,7 @@ module go-starter
 go 1.13
 
 require (
+	github.com/bykovme/gotrans v1.1.0
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
