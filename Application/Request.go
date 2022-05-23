@@ -22,14 +22,14 @@ type SharedResources interface {
 }
 
 // Handle request closure data
-func req() func(c *gin.Context) Request {
-	return func(c *gin.Context) Request {
+func req() func(c *gin.Context) *Request {
+	return func(c *gin.Context) *Request {
 		var request Request
 		request.Context = c
 		connectToDatabase(&request)
 		//request.DB, request.Connection = connectToDatabase()
 
-		return request
+		return &request
 	}
 }
 
@@ -43,14 +43,19 @@ func (req Request) Response(code int, body interface{}) {
 }
 
 // Initialize new request closure
-func NewRequest(c *gin.Context) Request {
+func NewRequest(c *gin.Context) *Request {
 	request := req()
 	req := request(c)
 
 	return req
 }
 
-func (req Request) Auth() Request {
+func NewRequestWithAuth(c *gin.Context) *Request {
+	return NewRequest(c).Auth()
+
+}
+
+func (req Request) Auth() *Request {
 
 	req.IsAuth = false
 	req.IsAdmin = false
@@ -65,5 +70,5 @@ func (req Request) Auth() Request {
 			req.IsAdmin = true
 		}
 	}
-	return req
+	return &req
 }

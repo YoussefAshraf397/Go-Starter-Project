@@ -7,7 +7,7 @@ import (
 )
 
 func CreateUser(c *gin.Context) {
-	r := Application.NewRequest(c).Auth()
+	r := Application.NewRequestWithAuth(c)
 	if !r.IsAdmin {
 		r.NoAuth()
 		return
@@ -20,4 +20,13 @@ func CreateUser(c *gin.Context) {
 
 	r.DB.Create(&user)
 	r.Created(user)
+}
+
+func ViewUser(c *gin.Context) {
+	r := Application.NewRequestWithAuth(c)
+	if !r.IsAuth {
+		r.NoAuth()
+		return
+	}
+	r.OK(r.User)
 }
