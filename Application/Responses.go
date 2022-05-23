@@ -18,3 +18,7 @@ func (req Request) NoAuth() {
 		"message": "You are not authorized ",
 	})
 }
+
+func (req Request) BadRequest(err interface{}) {
+	req.Response(422, err)
+}
