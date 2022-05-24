@@ -37,5 +37,6 @@ func Login(c *gin.Context) {
 		r.UserNotFound()
 		return
 	}
-	r.OK(VisitorTrasformer.UsertTransformer(user))
+	//r.OK(VisitorTrasformer.UsertTransformer(user)) 	 //#1
+	r.OK(user.Transform()) //2
 }
