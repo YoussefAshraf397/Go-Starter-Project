@@ -6,5 +6,5 @@ import (
 
 func (app RouterApp) authRoutes() {
 	app.Gin.GET("/create-user", Auth.CreateUser)
-	app.Gin.GET("/view-user", Auth.ViewUser)
+	app.Gin.GET("/me", Auth.Me)
 }

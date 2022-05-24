@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-starter/Application"
 	"go-starter/Models"
+	VisitorTrasformer "go-starter/Transformers/Visitors"
 	"go-starter/Validation/Visitors"
 )
 
@@ -20,7 +21,7 @@ func Register(c *gin.Context) {
 	user.Token = user.Email
 	user.Group = "user"
 	r.DB.Create(&user)
-	r.Created(user)
+	r.Created(VisitorTrasformer.UsertTransformer(user))
 }
 
 func Login(c *gin.Context) {
@@ -36,5 +37,5 @@ func Login(c *gin.Context) {
 		r.UserNotFound()
 		return
 	}
-	r.OK(user)
+	r.OK(VisitorTrasformer.UsertTransformer(user))
 }

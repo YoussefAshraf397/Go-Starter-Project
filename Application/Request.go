@@ -15,7 +15,7 @@ type Request struct {
 	DB              *gorm.DB
 	Connection      *sql.DB
 	IsAuth          bool
-	User            Models.User
+	User            *Models.User
 	IsAdmin         bool
 	Lang            string
 	ValidationError error

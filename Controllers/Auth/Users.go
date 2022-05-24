@@ -1,10 +1,10 @@
 package Auth
 
 import (
-	"github.com/bykovme/gotrans"
 	"github.com/gin-gonic/gin"
 	"go-starter/Application"
 	"go-starter/Models"
+	"go-starter/Transformers/Visitors"
 )
 
 func CreateUser(c *gin.Context) {
@@ -23,14 +23,10 @@ func CreateUser(c *gin.Context) {
 	r.Created(user)
 }
 
-func ViewUser(c *gin.Context) {
+func Me(c *gin.Context) {
 	r, auth := Application.AuthRequest(c)
 	if !auth {
 		return
 	}
-	//r.OK(r.User)
-	r.OK(gin.H{
-		"message": gotrans.T("hello_world"),
-		"lang":    r.Lang,
-	})
+	r.OK(Visitors.UsertTransformer(*r.User))
 }
