@@ -20,6 +20,10 @@ func main() {
 
 	// migrate project
 	app.Migrate()
+
+	// seeders
+	app.Seed()
+
 	// close connection
 	Application.CloseConnection(app)
 

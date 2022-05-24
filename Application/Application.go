@@ -6,6 +6,7 @@ import (
 	"github.com/bykovme/gotrans"
 	"github.com/gin-gonic/gin"
 	"go-starter/Database"
+	"go-starter/Seeders"
 	"gorm.io/gorm"
 )
 
@@ -40,7 +41,10 @@ func NewApp() *Application {
 	return app()
 }
 
+func (app *Application) Seed() {
+	Seeders.Seeds(app.DB)
+}
+
 func (app *Application) Migrate() {
 	Database.Migrate(app.DB)
-
 }

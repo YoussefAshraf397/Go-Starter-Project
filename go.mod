@@ -3,6 +3,8 @@ module go-starter
 go 1.13
 
 require (
+	github.com/brianvoe/gofakeit/v6 v6.16.0
+	github.com/bxcodec/faker/v3 v3.8.0 // indirect
 	github.com/bykovme/gotrans v1.1.0
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
