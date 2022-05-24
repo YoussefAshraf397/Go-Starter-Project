@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/bykovme/gotrans"
 	"github.com/gin-gonic/gin"
+	"go-starter/Database"
 	"gorm.io/gorm"
 )
 
@@ -37,4 +38,9 @@ func App() func() *Application {
 func NewApp() *Application {
 	app := App()
 	return app()
+}
+
+func (app *Application) Migrate() {
+	Database.Migrate(app.DB)
+
 }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/bykovme/gotrans"
 	"go-starter/Application"
-	"go-starter/Models"
 	"go-starter/Routes"
 )
 
@@ -20,7 +19,7 @@ func main() {
 	fmt.Println(gotrans.T("hello_world"))
 
 	// migrate project
-	app.DB.AutoMigrate(&Models.User{})
+	app.Migrate()
 	// close connection
 	Application.CloseConnection(app)
 
