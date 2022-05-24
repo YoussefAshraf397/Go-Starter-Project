@@ -38,8 +38,17 @@ func req() func(c *gin.Context) *Request {
 	}
 }
 
-func (req *Request) ValidateRequest(errors validation.Errors) {
+func (req *Request) ValidateRequest(errors validation.Errors) *Request {
 	req.ValidationError = errors.Filter()
+	return req
+}
+
+func (req *Request) Fails() bool {
+	if req.ValidationError != nil {
+		req.BadRequest(req.ValidationError)
+		return true
+	}
+	return false
 }
 
 func setLang(req *Request) {
@@ -78,7 +87,6 @@ func AuthRequest(c *gin.Context) (*Request, bool) {
 }
 
 func (req Request) Auth() *Request {
-
 	req.IsAuth = false
 	req.IsAdmin = false
 	authHeader := req.Context.GetHeader("Authorized")

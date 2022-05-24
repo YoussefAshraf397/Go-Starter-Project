@@ -23,3 +23,17 @@ func RegisterValidation(user Models.User) validation.Errors {
 			Validation.MinMaxRule(8, 15)),
 	}
 }
+
+func LoginValidation(user Models.User) validation.Errors {
+	return validation.Errors{
+		"email": validation.Validate(
+			user.Email,
+			Validation.RequiredRule(),
+			Validation.IsEmailRule(),
+			Validation.MinMaxRule(5, 35)),
+		"password": validation.Validate(
+			user.Password,
+			Validation.RequiredRule(),
+			Validation.MinMaxRule(8, 15)),
+	}
+}
