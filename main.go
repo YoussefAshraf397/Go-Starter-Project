@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/bykovme/gotrans"
+	"github.com/subosito/gotenv"
 	"go-starter/Application"
 	"go-starter/Routes"
 )
@@ -14,6 +15,7 @@ func main() {
 	// language
 	// ------------------------------------------------------------------------------------------------- //
 
+	gotenv.Load(".env")
 	app := Application.NewApp()
 	_ = gotrans.SetDefaultLocale("en") // Setting default locale
 	fmt.Println(gotrans.T("hello_world"))
@@ -22,7 +24,7 @@ func main() {
 	app.Migrate()
 
 	// seeders
-	app.Seed()
+	//app.Seed()
 
 	// close connection
 	Application.CloseConnection(app)
